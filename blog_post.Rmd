@@ -1,0 +1,44 @@
+---
+title: "Classic Nintendo Games are (Computationally) Hard"
+author: "Charlotte Gephart, Sophie Li, Michelle Tsai Gomez, Ester Zhao"
+date: "4/29/2019"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Background
+
+For our project we decided to analyze a paper that proves if Classic Nintendo Games are Computationally Hard. In our case, we will more specifically be discussing the proof that Super Mario Brothers is NP-hard.
+
+Super Mario Brothers is a platform video game firstly developed by Nintendo in 1985 for the Nintendo Entertainment System (NES). The player is in charge of controlling the main character, an Italian plumber called Mario, and has to complete many stages in order to rescue Princess Toadstool (aka Princess Peach), who was kidnapped by the villain of the game, Bowser. Mario’s character became so popular that he became Nintendo’s mascot and has appeared in over 200 of their games. 
+
+At the beginning of a level, Mario is small (his normal size of just one tile), and can die if any enemy touches him. If the player obtains a Super Mushroom, he then doubles in height and can break bricks. If the enemies touch the player as Super Mario, he goes back to his normal size, but if they touch him in his normal size he can die. If Mario collects a Star, then he becomes invincible for a limited amount of time and can break through any block that is in his way. To clear a stage, Mario must reach the flagpole at the end before either running out of lives or running out of time.
+
+# Proof Setup
+
+In general, with platformers - games like Super Mario Bros where the player moves across the screen to an end goal - we consider the decision problem to be whether it is possible to get from the start point to the finish. In order to prove NP-hardness of Super Mario Bros, the authors used a framework originally developed in a previous paper. 
+
+<picture goes here>
+
+ - Start & Finish: Most of the time, these gadgets are trivial, but in some cases a specific state is required to pass into the Finish gadget.
+
+ - Variable: A boolean variable gadget - or literal - forces the user to choose between paths. Each continuing variable must be accessible from the previous one, this way ensuring linear movement.
+
+ - Clause and Check: Clause gadgets are accessible from the literal paths corresponding to our boolean variables. The check must be unlocked in order to continue traversing - this ensures that the player will visit every variable and clause available.
+
+ - Crossover: The crossover gadget allows travel between two “passages” that overlap, to ensure there is no leakage. For example, we can pass directly between two clauses without encountering the second boolean - however this must be completed in positive linear movement.
+ 
+The authors prove that this framework is reducible from 3SAT, which makes it NP-hard.
+
+
+# Proof Application
+
+# Discussion
+
+# References
