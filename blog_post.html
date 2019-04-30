@@ -303,7 +303,7 @@ div.tocify {
 </div>
 <div id="proof-setup" class="section level1">
 <h1>Proof Setup</h1>
-<p>In general, with platformers - games like Super Mario Bros where the player moves across the screen to an end goal - we consider the decision problem to be whether it is possible to get from the start point to the finish. In order to prove NP-hardness of Super Mario Bros, the authors used a framework originally developed in a previous paper.</p>
+<p>In general, with platformers - games like Super Mario Bros where the player moves across the screen to an end goal - <strong>we consider the decision problem to be whether it is possible to get from the start point to the finish.</strong> In order to prove NP-hardness of Super Mario Bros, the authors used a framework originally developed in a previous paper that is reducible from 3SAT.</p>
 <p><picture goes here></p>
 <ul>
 <li><p>Start &amp; Finish: Most of the time, these gadgets are trivial, but in some cases a specific state is required to pass into the Finish gadget.</p></li>
@@ -311,13 +311,43 @@ div.tocify {
 <li><p>Clause and Check: Clause gadgets are accessible from the literal paths corresponding to our boolean variables. The check must be unlocked in order to continue traversing - this ensures that the player will visit every variable and clause available.</p></li>
 <li><p>Crossover: The crossover gadget allows travel between two “passages” that overlap, to ensure there is no leakage. For example, we can pass directly between two clauses without encountering the second boolean - however this must be completed in positive linear movement.</p></li>
 </ul>
-<p>The authors prove that this framework is reducible from 3SAT, which makes it NP-hard.</p>
+<p>Most importantly, one pass through the final check path if and only if each clause has been unlocked by a literal. By showing that each of the above gadgets can be implemented in the game, the authors prove that Super Mario Bros. adheres to the framework, and thus, is reducible from 3SAT. The authors construct the gadgets as follows:</p>
 </div>
 <div id="proof-application" class="section level1">
 <h1>Proof Application</h1>
+<div id="start-finish" class="section level2">
+<h2>Start &amp; Finish</h2>
+<p>In most cases, these gadgets our trivial. However, we can force Mario to begin or end in a certain state: above, Mario must be big to break the brick at the Finish gadget, so he must hit the item block to obtain a Mushroom at the Start gadget.</p>
+</div>
+<div id="variable" class="section level2">
+<h2>Variable</h2>
+<p>The variable gadget forces the user to choose between paths, and each variable represents a Boolean literal. Each continuing variable must be accessible from the previous variable.</p>
+<p>In the example above, we can see that the screen has two entrances (one from the top left, one from the top right). Once he falls down the ledge, he cannot backtrack to either of the previous variables. To choose his path (which value to assign his variable), he falls down the ledge and chooses the left or the right passage.</p>
+</div>
+<div id="clause-and-check" class="section level2">
+<h2>Clause and Check</h2>
+<p>Clause gadgets are accessible from the literal paths corresponding to the Boolean variables. They contain a check which must be unlocked to continue (which ensures that the player visits every variable and clause available).</p>
+<p>Here, we can see that the three bottom passages correspond to the literals in the clause. To cross to the right, Mario must hit all three item blocks (visit all three literals in the clause) in order to release a Star that grants temporary invincibility. Without the Star, Mario is unable to cross the firebars to continue.</p>
+</div>
+<div id="crossover" class="section level2">
+<h2>Crossover</h2>
+<p>Finally, we have the crossover gadget that allows travel between two paths that overlap and possibly bypass other variables without leakages, which means no backtracking. Mario can only enter the screen (from the figure below) from the bottom or the left. When he approaches from the left, he may be hurt by the Goomba, but can later pick up a mushroom by walking through the small corridor and hit the item block. There is no leakage in this scenario because small Mario cannot break bricks, so there is no chance for him to go through the top. When he approaches from the bottom, Mario can jump up the blocks and break the bricks to exit out the top. There is no leakage here because Big Mario cannot fit through the small passages to the left or the right.</p>
+</div>
 </div>
 <div id="discussion" class="section level1">
 <h1>Discussion</h1>
+<p>Overall, we thought that proof was creative (and interesting to us)! The application of the framework to the game was easy to follow and understand, due to the addition of screenshots to the paper. However, we disliked the number of restrictions and assumptions based on the framework, which made it difficult to understand the theory behind the proof. In addition, because the parent framework was based on PushPush (which none of us have played before), we felt like our understanding of the foundational aspects was lacking. We thought that including a better explanation of the theory within this paper would have helped our overall understanding.</p>
+<p>The primary contribution of this theory comes in two parts: the implications for players of the games, and for game developers. For game players, based on the reduction to 3SAT, there are certain actions (literals of variables) they will take during the game that determine the satisfiability of the boolean question: whether you have the ability to reach the end. They can use this information to determine which literals still make it satisfiable, and which will prevent them from completing the level. For game developers, they can use this framework to create various difficulties of levels and obstacles within levels. For example, harder levels means fewer combinations of literals that make the boolean satisfiable. Obstacles can be determined based on the players’ performance to make it more or less satisfiable. From this, we can build a logical flow of variables, enemies, rewards, and penalties. Games like Mario have many variables with several literals within each of them, so using this structure will help developers determine how each literal changes the course of the game for the player.</p>
+</div>
+<div id="team-members-contributions" class="section level1">
+<h1>Team Member’s Contributions</h1>
+<p>Each team member took lead on one or two specific sections of our project, and created the content for their chosen section. Team members also all contributed to the presentation and blog post creation.</p>
+<ul>
+<li><p>Charlotte: Article evaluation and Discussion section. Filmed and edited the gameplay video for our WOW-factor.</p></li>
+<li><p>Sophie: Proof applications section. Put together the blog post page in RMarkdown.</p></li>
+<li><p>Michelle: Intro &amp; Background and Proof applications sections. Provided the video game and console for gameplay as well as SNACKS.</p></li>
+<li><p>Ester: Proof setup and description. Put together the presentation.</p></li>
+</ul>
 </div>
 <div id="references" class="section level1">
 <h1>References</h1>
